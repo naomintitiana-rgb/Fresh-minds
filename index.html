@@ -1,28 +1,1147 @@
-<!<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Freshminds Hub - Home</title>
+    <title>Freshminds Hub - Complete Website</title>
     
-    <!-- CSS Styles -->
     <style>
-        /* ... (keep all the existing CSS exactly as before) ... */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        @import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Inter:wght@400;500;600;700&display=swap');
+
+        body {
+            background: #f8fafc;
+            color: #1e293b;
+            min-height: 100vh;
+        }
+
+        /* Navigation */
+        .navbar {
+            background: white;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 40;
+            padding: 1rem 0;
+        }
+
+        .nav-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .logo span {
+            font-size: 2rem;
+        }
+
+        .logo h2 {
+            font-size: 1.5rem;
+            color: #8a4f9e;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links button {
+            background: none;
+            border: none;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            transition: all 0.3s;
+            color: #1e293b;
+        }
+
+        .nav-links button:hover {
+            background: #f1f5f9;
+            color: #1a5f5a;
+        }
+
+        .nav-links button.active {
+            color: #1a5f5a;
+            font-weight: 600;
+            background: #e2e8f0;
+        }
+
+        .logout-btn {
+            color: #dc2626 !important;
+        }
+
+        .logout-btn:hover {
+            background: #fee2e2 !important;
+        }
+
+        .menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .mobile-menu {
+            display: none;
+            padding: 1rem 2rem;
+            background: white;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .mobile-menu.active {
+            display: block;
+        }
+
+        .mobile-menu button {
+            display: block;
+            padding: 0.75rem 0;
+            text-decoration: none;
+            color: #1e293b;
+            width: 100%;
+            text-align: left;
+            background: none;
+            border: none;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        /* Page Container */
+        .page-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: none;
+        }
+
+        .page-container.active {
+            display: block;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Footer */
+        .footer {
+            background: white;
+            border-top: 1px solid #e2e8f0;
+            padding: 2rem;
+            text-align: center;
+            margin-top: 4rem;
+        }
+
+        .footer-text {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            color: #64748b;
+            margin-bottom: 0.5rem;
+        }
+
+        .heart {
+            color: #dc2626;
+            animation: heartbeat 1.5s infinite;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        .copyright {
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .menu-btn {
+                display: block;
+            }
+        }
+
+        /* ========== LOGIN PAGE STYLES ========== */
+        .login-body {
+            background: linear-gradient(135deg, #1a5f5a 0%, #8a4f9e 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow-x: hidden;
+            padding: 2rem;
+        }
+
+        .butterfly {
+            position: absolute;
+            font-size: 2rem;
+            animation: float 20s infinite linear;
+            pointer-events: none;
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(100px, -50px) rotate(90deg); }
+            50% { transform: translate(200px, 0) rotate(180deg); }
+            75% { transform: translate(100px, 50px) rotate(270deg); }
+            100% { transform: translate(0, 0) rotate(360deg); }
+        }
+
+        .top-wave {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 60px;
+            background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 1200 40" xmlns="http://www.w3.org/2000/svg"><path d="M0,20 Q50,0 100,20 Q150,40 200,20 Q250,0 300,20 Q350,40 400,20 Q450,0 500,20 Q550,40 600,20 Q650,0 700,20 Q750,40 800,20 Q850,0 900,20 Q950,40 1000,20 Q1050,0 1100,20 Q1150,40 1200,20" fill="none" stroke="%23a855f7" stroke-width="3"/></svg>') repeat-x;
+            background-size: 200px 60px;
+            animation: wave 10s linear infinite;
+        }
+
+        @keyframes wave {
+            0% { background-position: 0 0; }
+            100% { background-position: 200px 0; }
+        }
+
+        .login-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            width: 100%;
+            max-width: 450px;
+            padding: 2.5rem;
+            border-radius: 1.5rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            position: relative;
+            z-index: 10;
+        }
+
+        .login-card .logo {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .login-card .logo span {
+            font-size: 5rem;
+            display: block;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .login-card h1 {
+            font-family: 'Merriweather', serif;
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #1a5f5a, #8a4f9e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .login-subtitle {
+            text-align: center;
+            color: #8a4f9e;
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 1rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 0.75rem;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        .form-group input:focus {
+            border-color: #1a5f5a;
+            box-shadow: 0 0 0 3px rgba(26, 95, 90, 0.1);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 1rem;
+            border: none;
+            border-radius: 0.75rem;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: linear-gradient(135deg, #1a5f5a, #0e3e3a);
+            color: white;
+        }
+
+        .login-btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 20px rgba(26, 95, 90, 0.3);
+        }
+
+        .toggle-text {
+            text-align: center;
+            margin-top: 1.5rem;
+            font-size: 1rem;
+            color: #666;
+        }
+
+        .toggle-btn {
+            background: none;
+            border: none;
+            color: #8a4f9e;
+            font-weight: 600;
+            text-decoration: underline;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .toggle-btn:hover {
+            color: #6b3b7e;
+        }
+
+        .error-message {
+            color: #dc2626;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            display: none;
+            text-align: center;
+            padding: 0.5rem;
+            background: #fee2e2;
+            border-radius: 0.5rem;
+        }
+
+        /* ========== HOME PAGE STYLES ========== */
+        .hero {
+            padding: 4rem 2rem;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(26, 95, 90, 0.1), rgba(138, 79, 158, 0.1));
+            border-radius: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .hero h1 {
+            font-family: 'Merriweather', serif;
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #1a5f5a, #8a4f9e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-text {
+            font-size: 1.2rem;
+            color: #475569;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            line-height: 1.6;
+        }
+
+        .hero-btn {
+            background: linear-gradient(135deg, #e91e63, #d81b60);
+            color: white;
+            border: none;
+            padding: 1rem 2.5rem;
+            font-size: 1.2rem;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .hero-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(233, 30, 99, 0.3);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
+            border: 1px solid #e2e8f0;
+            cursor: pointer;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            border-color: #1a5f5a;
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #1e293b;
+        }
+
+        .feature-desc {
+            color: #64748b;
+            line-height: 1.6;
+        }
+
+        .video-section {
+            background: white;
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            margin-bottom: 4rem;
+        }
+
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .video-content {
+            padding: 2rem;
+        }
+
+        .video-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #1e293b;
+        }
+
+        .video-desc {
+            color: #64748b;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+
+        .reaction-bar {
+            background: #1a5f5a;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .reaction-btn {
+            background: none;
+            border: none;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: transform 0.3s;
+            position: relative;
+        }
+
+        .reaction-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .reaction-count {
+            font-weight: bold;
+        }
+
+        .badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #dc2626;
+            color: white;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .quick-links {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .quick-link-btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1rem;
+        }
+
+        .quick-link-btn:hover {
+            transform: scale(1.05);
+        }
+
+        /* ========== CHILL OUT ZONE STYLES ========== */
+        .mood-section {
+            background: white;
+            border-radius: 1.5rem;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: #1e293b;
+        }
+
+        .mood-grid {
+            display: grid;
+            grid-template-columns: repeat(8, 1fr);
+            gap: 1rem;
+        }
+
+        .mood-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 1rem;
+            border: none;
+            background: #f1f5f9;
+            border-radius: 0.75rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1rem;
+        }
+
+        .mood-btn:hover {
+            transform: scale(1.1);
+            background: #e2e8f0;
+        }
+
+        .mood-btn.selected {
+            transform: scale(1.1);
+            color: white;
+        }
+
+        .mood-happy.selected { background: #eab308; }
+        .mood-calm.selected { background: #3b82f6; }
+        .mood-anxious.selected { background: #f97316; }
+        .mood-sad.selected { background: #6366f1; }
+        .mood-frustrated.selected { background: #ef4444; }
+        .mood-grateful.selected { background: #22c55e; }
+        .mood-tired.selected { background: #a855f7; }
+        .mood-motivated.selected { background: #ec4899; }
+
+        .mood-emoji {
+            font-size: 2rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .mood-label {
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .mood-message {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background: rgba(26, 95, 90, 0.1);
+            border-radius: 0.75rem;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+
+        .breathing-section {
+            background: linear-gradient(135deg, rgba(26, 95, 90, 0.1), rgba(138, 79, 158, 0.1));
+            border-radius: 1.5rem;
+            padding: 2rem;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .breathing-circle {
+            width: 150px;
+            height: 150px;
+            margin: 2rem auto;
+            background: linear-gradient(135deg, #1a5f5a, #8a4f9e);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.1s;
+            box-shadow: 0 10px 25px rgba(26, 95, 90, 0.3);
+        }
+
+        .inner-circle {
+            width: 90px;
+            height: 90px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+        }
+
+        .breathing-phase {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #1a5f5a;
+            margin: 1rem 0;
+            text-transform: capitalize;
+        }
+
+        .activities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .activity-card {
+            padding: 2rem;
+            border-radius: 1.5rem;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            animation: fadeInUp 0.5s ease-out;
+        }
+
+        .activity-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
+        }
+
+        .activity-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .activity-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .activity-desc {
+            font-size: 1rem;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .video-card {
+            background: white;
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        .tips-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .tip-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            text-align: center;
+            border: 1px solid #e2e8f0;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .tip-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+            border-color: #8a4f9e;
+        }
+
+        /* ========== COMMUNITY FORUM STYLES ========== */
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .image-card {
+            background: linear-gradient(135deg, rgba(26, 95, 90, 0.1), rgba(138, 79, 158, 0.1));
+            border-radius: 1rem;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .image-emoji {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .comment-section {
+            background: white;
+            border-radius: 1.5rem;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        .comment-input-group {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .comment-input {
+            flex: 1;
+            padding: 1rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 0.75rem;
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        .comment-input:focus {
+            border-color: #1a5f5a;
+            box-shadow: 0 0 0 3px rgba(26, 95, 90, 0.1);
+        }
+
+        .post-btn {
+            background: linear-gradient(135deg, #1a5f5a, #0e3e3a);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s;
+        }
+
+        .post-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(26, 95, 90, 0.3);
+        }
+
+        .comments-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .comment-card {
+            background: #f8fafc;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-10px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .comment-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+
+        .comment-author {
+            font-weight: 600;
+            color: #1a5f5a;
+        }
+
+        .comment-date {
+            color: #94a3b8;
+            font-size: 0.9rem;
+        }
+
+        .comment-text {
+            color: #334155;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .comment-actions {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .action-btn {
+            background: none;
+            border: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #64748b;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.95rem;
+        }
+
+        .action-btn:hover {
+            transform: scale(1.1);
+            color: #1a5f5a;
+        }
+
+        .subscribe-btn {
+            background: #dc2626;
+            color: white;
+            border: none;
+            padding: 1rem 3rem;
+            border-radius: 0.75rem;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin: 2rem auto;
+            display: block;
+            transition: all 0.3s;
+            box-shadow: 0 10px 20px rgba(220, 38, 38, 0.3);
+        }
+
+        .subscribe-btn:hover {
+            transform: scale(1.05);
+            background: #b91c1c;
+        }
+
+        .study-section {
+            background: linear-gradient(135deg, rgba(26, 95, 90, 0.1), rgba(138, 79, 158, 0.1));
+            border-radius: 1.5rem;
+            padding: 2rem;
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        .study-emoji {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .study-text {
+            font-size: 1.2rem;
+            color: #1e293b;
+            font-weight: 500;
+        }
+
+        .rules-section {
+            background: white;
+            border-radius: 1.5rem;
+            padding: 2rem;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+            margin: 2rem 0;
+        }
+
+        .rules-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #dc2626;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .rules-list {
+            list-style: none;
+        }
+
+        .rule-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .rule-number {
+            color: #8a4f9e;
+            font-weight: bold;
+            min-width: 25px;
+        }
+
+        .chatbot-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .chatbot-btn {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #1a5f5a, #0e3e3a);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(26, 95, 90, 0.4);
+            transition: all 0.3s;
+            animation: pulse 2s infinite;
+        }
+
+        .chatbot-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .chat-window {
+            position: absolute;
+            bottom: 80px;
+            right: 0;
+            width: 300px;
+            background: white;
+            border-radius: 1rem;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            display: none;
+        }
+
+        .chat-window.active {
+            display: block;
+            animation: slideInChat 0.3s ease-out;
+        }
+
+        @keyframes slideInChat {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .chat-header {
+            background: linear-gradient(135deg, #1a5f5a, #0e3e3a);
+            color: white;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chat-header h3 {
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .close-chat {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
+        .chat-messages {
+            height: 250px;
+            padding: 1rem;
+            overflow-y: auto;
+            background: #f8fafc;
+        }
+
+        .message {
+            margin-bottom: 1rem;
+            display: flex;
+        }
+
+        .message.bot {
+            justify-content: flex-start;
+        }
+
+        .message.user {
+            justify-content: flex-end;
+        }
+
+        .message-content {
+            max-width: 80%;
+            padding: 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .bot .message-content {
+            background: white;
+            border: 1px solid #e2e8f0;
+        }
+
+        .user .message-content {
+            background: linear-gradient(135deg, #1a5f5a, #0e3e3a);
+            color: white;
+        }
+
+        .chat-input-group {
+            display: flex;
+            padding: 1rem;
+            gap: 0.5rem;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 0.75rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.5rem;
+            outline: none;
+        }
+
+        .chat-send {
+            background: #1a5f5a;
+            color: white;
+            border: none;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .chat-send:hover {
+            background: #0e3e3a;
+        }
+
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #1a5f5a;
+            color: white;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            animation: slideIn 0.3s ease-out;
+            z-index: 1000;
+            max-width: 300px;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @media (max-width: 768px) {
+            .mood-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+            
+            .video-grid,
+            .tips-grid,
+            .image-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .comment-input-group {
+                flex-direction: column;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .quick-links {
+                flex-direction: column;
+            }
+        }
     </style>
 </head>
 <body>
     <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-container">
-            <a href="homepage.html" class="logo">
+            <div class="logo" onclick="showPage('home')">
                 <span>🧠</span>
                 <h2>Freshminds Hub</h2>
-            </a>
+            </div>
 
-            <div class="nav-links">
-                <a href="homepage.html" class="active">🏠 Home</a>
-                <a href="chillout.html">☕ Chill Out Zone</a>
-                <a href="community.html">👥 Community</a>
+            <div class="nav-links" id="navLinks">
+                <button onclick="showPage('home')" class="active" id="nav-home">🏠 Home</button>
+                <button onclick="showPage('chillout')" id="nav-chillout">☕ Chill Out Zone</button>
+                <button onclick="showPage('community')" id="nav-community">👥 Community</button>
                 <button class="logout-btn" onclick="logout()">🚪 Logout</button>
             </div>
 
@@ -30,30 +1149,79 @@
         </div>
 
         <div class="mobile-menu" id="mobileMenu">
-            <a href="homepage.html">🏠 Home</a>
-            <a href="chillout.html">☕ Chill Out Zone</a>
-            <a href="community.html">👥 Community</a>
-            <button onclick="logout()">🚪 Logout</button>
+            <button onclick="showPage('home')">🏠 Home</button>
+            <button onclick="showPage('chillout')">☕ Chill Out Zone</button>
+            <button onclick="showPage('community')">👥 Community</button>
+            <button onclick="logout()" style="color: #dc2626;">🚪 Logout</button>
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-content">
+    <!-- LOGIN PAGE -->
+    <div id="login-page" class="login-body">
+        <div class="butterfly" style="top: 10%; left: 5%; color: #e74c3c;">🦋</div>
+        <div class="butterfly" style="top: 20%; right: 8%; color: #ff69b4;">🦋</div>
+        <div class="butterfly" style="bottom: 15%; left: 10%; color: #e74c3c;">🦋</div>
+        <div class="butterfly" style="bottom: 25%; right: 15%; color: #ff69b4;">🦋</div>
+        <div class="butterfly" style="top: 40%; left: 20%; color: #8a4f9e;">🦋</div>
+        
+        <div class="top-wave"></div>
+
+        <div class="login-card">
+            <div class="logo">
+                <span>🧠</span>
+            </div>
+            
+            <h1 id="loginFormTitle">Create an Account</h1>
+            <p class="login-subtitle">Freshminds Hub</p>
+
+            <form id="loginForm">
+                <div class="form-group" id="nameGroup">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" placeholder="Enter your full name">
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" placeholder="Enter your email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="Enter your password" required>
+                </div>
+
+                <div class="form-group" id="dobGroup">
+                    <label for="dob">Date of Birth</label>
+                    <input type="date" id="dob">
+                </div>
+
+                <div class="error-message" id="loginErrorMessage"></div>
+
+                <button type="submit" class="login-btn" id="loginSubmitBtn">Sign Up</button>
+            </form>
+
+            <p class="toggle-text">
+                <span id="loginToggleText">Already have an account?</span>
+                <button class="toggle-btn" id="loginToggleBtn">Log in</button>
+            </p>
+        </div>
+    </div>
+
+    <!-- HOME PAGE -->
+    <div id="home-page" class="page-container">
+        <div class="hero">
             <h1>Welcome to Freshminds Hub</h1>
             <p class="hero-text" id="welcomeMessage">
                 Your go-to space for managing exam stress. We help MYP and DP2 students stay calm,
                 focused, and motivated as they prepare for their 2026 exams.
             </p>
-            <button class="hero-btn" onclick="showMessage()">Always Ready at Your Service</button>
+            <button class="hero-btn" onclick="showNotification('✨ We\'re here for you 24/7! Remember to take breaks and stay positive!')">
+                Always Ready at Your Service
+            </button>
         </div>
-    </section>
 
-    <!-- Features Grid -->
-    <div class="container">
         <div class="features-grid" id="featuresGrid"></div>
 
-        <!-- Video Section -->
         <div class="video-section">
             <div class="video-container">
                 <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Motivational Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
@@ -61,11 +1229,10 @@
             <div class="video-content">
                 <h3 class="video-title">Stay Motivated</h3>
                 <p class="video-desc">Watch inspiring content to keep you going through your exam preparation.</p>
-                <button class="hero-btn" style="margin-top: 1rem;" onclick="window.location.href='chillout.html'">Explore More Videos →</button>
+                <button class="hero-btn" style="margin-top: 1rem;" onclick="showPage('chillout')">Explore More Videos →</button>
             </div>
         </div>
 
-        <!-- Reaction Bar -->
         <div class="reaction-bar">
             <button class="reaction-btn" onclick="react('love')">
                 <span>❤️</span>
@@ -77,57 +1244,364 @@
                 <span class="reaction-count" id="likeCount">42</span>
                 <span>Like</span>
             </button>
-            <button class="reaction-btn" onclick="openMessages()">
+            <button class="reaction-btn" onclick="showPage('community')">
                 <span>💬</span>
                 <span>Messages</span>
                 <span class="badge">5</span>
             </button>
         </div>
 
-        <!-- Quick Links -->
-        <div style="display: flex; gap: 1rem; justify-content: center; margin-top: 2rem;">
-            <button class="post-btn" onclick="window.location.href='chillout.html'" style="background: #8a4f9e;">Go to Chill Out Zone 🧘</button>
-            <button class="post-btn" onclick="window.location.href='community.html'" style="background: #1a5f5a;">Join Community Discussion 👥</button>
+        <div class="quick-links">
+            <button class="quick-link-btn" style="background: #8a4f9e; color: white;" onclick="showPage('chillout')">
+                🧘 Go to Chill Out Zone
+            </button>
+            <button class="quick-link-btn" style="background: #1a5f5a; color: white;" onclick="showPage('community')">
+                👥 Join Community Discussion
+            </button>
         </div>
     </div>
 
-    <!-- Footer -->
-    <footer class="footer">
+    <!-- CHILL OUT ZONE PAGE -->
+    <div id="chillout-page" class="page-container">
+        <div class="hero" style="background: linear-gradient(135deg, rgba(138, 79, 158, 0.1), rgba(26, 95, 90, 0.1));">
+            <h1>Chill Out Zone</h1>
+            <p class="hero-text">Feeling overwhelmed? This is your safe space to unwind, recharge, and find activities that help you de-stress. 🌟</p>
+        </div>
+
+        <div class="mood-section">
+            <h2 class="section-title">How do you feel today?</h2>
+            <div class="mood-grid" id="moodGrid"></div>
+            <div class="mood-message" id="moodMessage" style="display: none;"></div>
+        </div>
+
+        <div class="breathing-section">
+            <h2 class="section-title">Guided Breathing Exercise</h2>
+            <div class="breathing-circle" id="breathingCircle" onclick="toggleBreathing()">
+                <div class="inner-circle">
+                    <span>🌸</span>
+                </div>
+            </div>
+            <div class="breathing-phase" id="breathingPhase">inhale</div>
+            <p class="breathing-text">Breathe in as the circle expands, hold, and breathe out as it shrinks.</p>
+        </div>
+
+        <h2 class="section-title">Activities to Try</h2>
+        <div class="activities-grid" id="activitiesGrid"></div>
+
+        <div class="video-grid">
+            <div class="video-card">
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/hnpQrMqDoqE" frameborder="0" allowfullscreen></iframe>
+                </div>
+                <div class="video-content">
+                    <h3>Understanding Stress</h3>
+                    <p>Learn what stress is and how it affects your body and mind.</p>
+                </div>
+            </div>
+
+            <div class="video-card">
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/sG7DBA-mgFY" frameborder="0" allowfullscreen></iframe>
+                </div>
+                <div class="video-content">
+                    <h3>Stress Relief Guide</h3>
+                    <p>Interactive guide to help you manage stress effectively.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="quick-links">
+            <button class="quick-link-btn" style="background: #1a5f5a; color: white;" onclick="showPage('community')">
+                👥 Share Your Experience
+            </button>
+        </div>
+
+        <h2 class="section-title">Quick Tips</h2>
+        <div class="tips-grid">
+            <div class="tip-card" onclick="showPage('community')">
+                <div class="tip-icon">🧘</div>
+                <h3 class="tip-title">Meditation</h3>
+                <p class="tip-desc">Practice mindfulness to calm your mind and reduce anxiety.</p>
+            </div>
+            <div class="tip-card" onclick="showPage('community')">
+                <div class="tip-icon">🏃</div>
+                <h3 class="tip-title">Exercise</h3>
+                <p class="tip-desc">Physical activity releases endorphins that naturally reduce stress.</p>
+            </div>
+            <div class="tip-card" onclick="showPage('community')">
+                <div class="tip-icon">🎵</div>
+                <h3 class="tip-title">Music Therapy</h3>
+                <p class="tip-desc">Relaxing music can lower cortisol levels and help you unwind.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- COMMUNITY FORUM PAGE -->
+    <div id="community-page" class="page-container">
+        <div class="hero" style="background: linear-gradient(135deg, rgba(26, 95, 90, 0.1), rgba(138, 79, 158, 0.1));">
+            <div class="subtitle" style="color: #8a4f9e; font-weight: bold; margin-bottom: 1rem;">Freshminds Hub</div>
+            <h1>Stress Support Squad</h1>
+            <p class="hero-text">This is your space to share experiences, support each other, and grow together. Whether you're in MYP or DP2, we're all in this together!</p>
+        </div>
+
+        <div class="quick-links">
+            <button class="quick-link-btn" style="background: #8a4f9e; color: white;" onclick="showPage('chillout')">
+                🧘 Relaxation Activities
+            </button>
+        </div>
+
+        <div class="image-grid">
+            <div class="image-card">
+                <div class="image-emoji">😊👫👬</div>
+                <p>Happy students supporting each other</p>
+            </div>
+            <div class="image-card">
+                <div class="image-emoji">📚🤝💬</div>
+                <p>Students interacting & learning together</p>
+            </div>
+        </div>
+
+        <div class="comment-section">
+            <h2 class="section-title">Share Your Experience</h2>
+            
+            <div class="comment-input-group">
+                <input type="text" class="comment-input" id="commentInput" placeholder="Write your comment..." onkeypress="handleKeyPress(event)">
+                <button class="post-btn" onclick="addComment()">
+                    <span>📤</span>
+                    Post
+                </button>
+            </div>
+
+            <div class="comments-list" id="commentsList"></div>
+        </div>
+
+        <button class="subscribe-btn" onclick="subscribe()">
+            🔔 Subscribe for Updates
+        </button>
+
+        <div class="study-section">
+            <div class="study-emoji">📖👩‍🎓👨‍🎓🤝</div>
+            <p class="study-text">Study together, grow together! Find a study buddy and support each other.</p>
+        </div>
+
+        <div class="rules-section">
+            <h2 class="rules-title">
+                <span>⚠️</span>
+                Community Rules
+            </h2>
+            <ul class="rules-list" id="rulesList"></ul>
+        </div>
+    </div>
+
+    <!-- Footer (appears on all pages except login) -->
+    <div id="main-footer" class="footer" style="display: none;">
         <p class="footer-text">
             Made with <span class="heart">❤️</span> for students by students
         </p>
         <p class="copyright">© 2024 Freshminds Hub. All rights reserved.</p>
-    </footer>
+    </div>
 
-    <!-- JavaScript -->
+    <!-- Chatbot -->
+    <div class="chatbot-container" id="chatbotContainer" style="display: none;">
+        <div class="chat-window" id="chatWindow">
+            <div class="chat-header">
+                <h3>
+                    <span>💬</span>
+                    Chat Assistant
+                </h3>
+                <button class="close-chat" onclick="toggleChat()">✕</button>
+            </div>
+            <div class="chat-messages" id="chatMessages"></div>
+            <div class="chat-input-group">
+                <input type="text" class="chat-input" id="chatInput" placeholder="Ask me anything..." onkeypress="handleChatKeyPress(event)">
+                <button class="chat-send" onclick="sendChatMessage()">📤</button>
+            </div>
+        </div>
+        <button class="chatbot-btn" onclick="toggleChat()">💬</button>
+    </div>
+
     <script>
-        // Features data
-        const features = [
-            { icon: "🎯", title: "Stay Focused", desc: "Learn proven techniques to maintain concentration during study sessions and build healthy study habits.", link: "chillout.html" },
-            { icon: "💪", title: "Build Confidence", desc: "Discover strategies that help you approach exams with confidence and a positive mindset.", link: "community.html" },
-            { icon: "🤝", title: "Connect & Share", desc: "Join a supportive community of fellow students going through the same experience as you.", link: "community.html" },
-            { icon: "🧘", title: "Relax & Recharge", desc: "Take breaks with guided relaxation exercises, fun activities, and calming content.", link: "chillout.html" },
-            { icon: "📊", title: "Track Progress", desc: "Monitor your study habits and stress levels to find what works best for you.", link: "#" },
-            { icon: "💡", title: "Expert Tips", desc: "Get advice from education professionals and experienced students.", link: "community.html" }
-        ];
-
-        // Reaction counts
+        // ========== GLOBAL VARIABLES ==========
+        let isLoggedIn = false;
+        let isLoginMode = false;
         let loves = 28;
         let likes = 42;
+        let breathingInterval;
+        let breathingPhase = "inhale";
+        let isBreathing = false;
+        
+        // Comments data
+        let comments = [
+            { author: "Sarah K.", text: "The breathing exercises really helped me before my math exam! 🙏", likes: 12, loves: 3, date: new Date().toLocaleDateString() },
+            { author: "James M.", text: "I was so stressed about DP exams but this community made me feel supported.", likes: 8, loves: 5, date: new Date().toLocaleDateString() },
+            { author: "Amina R.", text: "Try listening to lo-fi music while studying — it changed my life!", likes: 15, loves: 7, date: new Date().toLocaleDateString() }
+        ];
 
-        // Load features
+        // Chat messages
+        let chatMessages = [
+            { type: 'bot', text: "Hi! I'm here to help you with anything about stress management. Ask me anything! 😊" }
+        ];
+
+        // Community rules
+        const rules = [
+            "Be respectful and kind to everyone in the community.",
+            "No bullying, hate speech, or offensive language.",
+            "Share only constructive and supportive comments.",
+            "Respect everyone's privacy — don't share personal information.",
+            "Report any inappropriate behavior to the moderators."
+        ];
+
+        // Features data
+        const features = [
+            { icon: "🎯", title: "Stay Focused", desc: "Learn proven techniques to maintain concentration during study sessions.", page: "chillout" },
+            { icon: "💪", title: "Build Confidence", desc: "Discover strategies that help you approach exams with confidence.", page: "community" },
+            { icon: "🤝", title: "Connect & Share", desc: "Join a supportive community of fellow students.", page: "community" },
+            { icon: "🧘", title: "Relax & Recharge", desc: "Take breaks with guided relaxation exercises.", page: "chillout" },
+            { icon: "📊", title: "Track Progress", desc: "Monitor your study habits and stress levels.", page: "home" },
+            { icon: "💡", title: "Expert Tips", desc: "Get advice from education professionals.", page: "community" }
+        ];
+
+        // Mood data
+        const moods = [
+            { emoji: "😊", label: "Happy", class: "mood-happy" },
+            { emoji: "😌", label: "Calm", class: "mood-calm" },
+            { emoji: "😰", label: "Anxious", class: "mood-anxious" },
+            { emoji: "😢", label: "Sad", class: "mood-sad" },
+            { emoji: "😤", label: "Frustrated", class: "mood-frustrated" },
+            { emoji: "🤗", label: "Grateful", class: "mood-grateful" },
+            { emoji: "😴", label: "Tired", class: "mood-tired" },
+            { emoji: "💪", label: "Motivated", class: "mood-motivated" }
+        ];
+
+        // Activities data
+        const activities = [
+            { icon: "🌬️", title: "Breathing Exercises", desc: "Try the 4-7-8 technique: breathe in for 4 seconds, hold for 7, breathe out for 8.", color: "linear-gradient(135deg, #3b82f6, #06b6d4)" },
+            { icon: "🎨", title: "Art Therapy", desc: "Express yourself through drawing, painting, or decorating your study space.", color: "linear-gradient(135deg, #a855f7, #ec4899)" },
+            { icon: "😂", title: "Laughter Therapy", desc: "Watch funny videos or share jokes with friends.", color: "linear-gradient(135deg, #ef4444, #f97316)" },
+            { icon: "📝", title: "Journaling", desc: "Write down your thoughts and feelings. It helps process emotions.", color: "linear-gradient(135deg, #22c55e, #10b981)" },
+            { icon: "🚶", title: "Nature Walk", desc: "A short walk outside can refresh your mind and boost your energy.", color: "linear-gradient(135deg, #14b8a6, #06b6d4)" },
+            { icon: "🎧", title: "Calming Sounds", desc: "Nature sounds, lo-fi beats, or classical music can help you relax.", color: "linear-gradient(135deg, #8b5cf6, #6366f1)" }
+        ];
+
+        // ========== PAGE NAVIGATION ==========
+        function showPage(page) {
+            // Hide all pages
+            document.getElementById('login-page').style.display = 'none';
+            document.getElementById('home-page').classList.remove('active');
+            document.getElementById('chillout-page').classList.remove('active');
+            document.getElementById('community-page').classList.remove('active');
+            
+            // Hide footer and chatbot on login page
+            const footer = document.getElementById('main-footer');
+            const chatbot = document.getElementById('chatbotContainer');
+            
+            if (page === 'login') {
+                document.getElementById('login-page').style.display = 'flex';
+                footer.style.display = 'none';
+                chatbot.style.display = 'none';
+            } else {
+                document.getElementById(page + '-page').classList.add('active');
+                footer.style.display = 'block';
+                chatbot.style.display = 'block';
+            }
+
+            // Update active nav
+            document.querySelectorAll('.nav-links button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            if (page !== 'login') {
+                document.getElementById('nav-' + page).classList.add('active');
+            }
+
+            // Load page-specific content
+            if (page === 'home') loadFeatures();
+            if (page === 'chillout') {
+                loadMoods();
+                loadActivities();
+            }
+            if (page === 'community') {
+                loadComments();
+                loadRules();
+            }
+        }
+
+        // ========== LOGIN FUNCTIONS ==========
+        function toggleLoginMode() {
+            isLoginMode = !isLoginMode;
+            const nameGroup = document.getElementById('nameGroup');
+            const dobGroup = document.getElementById('dobGroup');
+            const formTitle = document.getElementById('loginFormTitle');
+            const submitBtn = document.getElementById('loginSubmitBtn');
+            const toggleText = document.getElementById('loginToggleText');
+            const toggleBtn = document.getElementById('loginToggleBtn');
+
+            if (isLoginMode) {
+                nameGroup.style.display = 'none';
+                dobGroup.style.display = 'none';
+                formTitle.textContent = 'Welcome Back!';
+                submitBtn.textContent = 'Login';
+                toggleText.textContent = "Don't have an account?";
+                toggleBtn.textContent = 'Sign up';
+            } else {
+                nameGroup.style.display = 'block';
+                dobGroup.style.display = 'block';
+                formTitle.textContent = 'Create an Account';
+                submitBtn.textContent = 'Sign Up';
+                toggleText.textContent = 'Already have an account?';
+                toggleBtn.textContent = 'Log in';
+            }
+        }
+
+        // Login form submission
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const errorMessage = document.getElementById('loginErrorMessage');
+
+            if (!email || !password) {
+                errorMessage.style.display = 'block';
+                errorMessage.textContent = 'Please fill in all required fields';
+                return;
+            }
+
+            if (!isLoginMode) {
+                const name = document.getElementById('name').value;
+                const dob = document.getElementById('dob').value;
+                
+                if (!name || !dob) {
+                    errorMessage.style.display = 'block';
+                    errorMessage.textContent = 'Please fill in all fields';
+                    return;
+                }
+                localStorage.setItem('userName', name);
+            }
+
+            errorMessage.style.display = 'none';
+            isLoggedIn = true;
+            localStorage.setItem('loggedIn', 'true');
+            localStorage.setItem('userEmail', email);
+            
+            showNotification(isLoginMode ? 'Login successful!' : 'Account created successfully!');
+            showPage('home');
+            updateWelcomeMessage();
+        });
+
+        // Login toggle button
+        document.getElementById('loginToggleBtn').addEventListener('click', toggleLoginMode);
+
+        // ========== HOME PAGE FUNCTIONS ==========
         function loadFeatures() {
             const grid = document.getElementById('featuresGrid');
+            if (!grid) return;
+            
+            grid.innerHTML = '';
             features.forEach((feature, index) => {
                 const card = document.createElement('div');
                 card.className = 'feature-card';
                 card.style.animationDelay = `${index * 0.1}s`;
-                card.onclick = () => {
-                    if (feature.link !== '#') {
-                        window.location.href = feature.link;
-                    }
-                };
-                card.style.cursor = feature.link !== '#' ? 'pointer' : 'default';
+                card.onclick = () => showPage(feature.page);
                 card.innerHTML = `
                     <div class="feature-icon">${feature.icon}</div>
                     <h3 class="feature-title">${feature.title}</h3>
@@ -137,16 +1611,14 @@
             });
         }
 
-        // Set welcome message with user name
-        function setWelcomeMessage() {
+        function updateWelcomeMessage() {
             const userName = localStorage.getItem('userName');
             const welcomeEl = document.getElementById('welcomeMessage');
-            if (userName) {
+            if (userName && welcomeEl) {
                 welcomeEl.innerHTML = `Welcome back, ${userName}! 👋 Your go-to space for managing exam stress. We help MYP and DP2 students stay calm, focused, and motivated as they prepare for their 2026 exams.`;
             }
         }
 
-        // Reaction handlers
         function react(type) {
             if (type === 'love') {
                 loves++;
@@ -159,100 +1631,295 @@
             }
         }
 
-        // Show notification
+        // ========== CHILL OUT ZONE FUNCTIONS ==========
+        function loadMoods() {
+            const grid = document.getElementById('moodGrid');
+            if (!grid) return;
+            
+            grid.innerHTML = '';
+            moods.forEach(mood => {
+                const btn = document.createElement('button');
+                btn.className = `mood-btn ${mood.class}`;
+                btn.innerHTML = `
+                    <span class="mood-emoji">${mood.emoji}</span>
+                    <span class="mood-label">${mood.label}</span>
+                `;
+                btn.onclick = () => selectMood(mood.label, mood.class, mood.emoji);
+                grid.appendChild(btn);
+            });
+        }
+
+        function selectMood(label, className, emoji) {
+            document.querySelectorAll('.mood-btn').forEach(btn => {
+                btn.classList.remove('selected');
+            });
+            event.target.closest('.mood-btn').classList.add('selected');
+
+            const messageDiv = document.getElementById('moodMessage');
+            messageDiv.style.display = 'block';
+            messageDiv.innerHTML = `You're feeling <strong>${label}</strong> ${emoji} today. Let's work through this together! 💛`;
+
+            suggestActivity(label);
+        }
+
+        function suggestActivity(mood) {
+            const suggestions = {
+                "Anxious": "Try the breathing exercise to calm your nerves.",
+                "Sad": "Watch a funny video or try art therapy.",
+                "Frustrated": "Take a nature walk or listen to calming music.",
+                "Tired": "Try the breathing exercise or take a short break.",
+                "Happy": "Share your positivity in the community forum!",
+                "Calm": "Great! Maintain this state with meditation.",
+                "Grateful": "Write in your journal about things you're grateful for.",
+                "Motivated": "Channel this energy into productive study sessions!"
+            };
+
+            const suggestion = suggestions[mood];
+            if (suggestion) {
+                setTimeout(() => showNotification(`💡 Suggestion: ${suggestion}`), 500);
+            }
+        }
+
+        function loadActivities() {
+            const grid = document.getElementById('activitiesGrid');
+            if (!grid) return;
+            
+            grid.innerHTML = '';
+            activities.forEach((activity, index) => {
+                const card = document.createElement('div');
+                card.className = 'activity-card';
+                card.style.background = activity.color;
+                card.style.animationDelay = `${index * 0.1}s`;
+                card.innerHTML = `
+                    <div class="activity-icon">${activity.icon}</div>
+                    <h3 class="activity-title">${activity.title}</h3>
+                    <p class="activity-desc">${activity.desc}</p>
+                `;
+                card.onclick = () => showNotification(`✨ ${activity.title}\n\n${activity.desc}`);
+                grid.appendChild(card);
+            });
+        }
+
+        function toggleBreathing() {
+            if (isBreathing) {
+                clearInterval(breathingInterval);
+                isBreathing = false;
+                document.getElementById('breathingCircle').style.transform = 'scale(1)';
+                document.getElementById('breathingPhase').textContent = 'inhale';
+                breathingPhase = "inhale";
+            } else {
+                startBreathing();
+            }
+        }
+
+        function startBreathing() {
+            isBreathing = true;
+            const circle = document.getElementById('breathingCircle');
+            const phaseDisplay = document.getElementById('breathingPhase');
+            
+            breathingInterval = setInterval(() => {
+                if (breathingPhase === "inhale") {
+                    circle.style.transform = 'scale(1.5)';
+                    phaseDisplay.textContent = "hold...";
+                    breathingPhase = "hold";
+                } else if (breathingPhase === "hold") {
+                    phaseDisplay.textContent = "exhale";
+                    breathingPhase = "exhale";
+                } else {
+                    circle.style.transform = 'scale(1)';
+                    phaseDisplay.textContent = "inhale";
+                    breathingPhase = "inhale";
+                }
+            }, 4000);
+        }
+
+        // ========== COMMUNITY FORUM FUNCTIONS ==========
+        function loadComments() {
+            const list = document.getElementById('commentsList');
+            if (!list) return;
+            
+            list.innerHTML = '';
+            comments.forEach((comment, index) => {
+                const commentEl = document.createElement('div');
+                commentEl.className = 'comment-card';
+                commentEl.innerHTML = `
+                    <div class="comment-header">
+                        <span class="comment-author">${comment.author}</span>
+                        <span class="comment-date">${comment.date}</span>
+                    </div>
+                    <p class="comment-text">${comment.text}</p>
+                    <div class="comment-actions">
+                        <button class="action-btn" onclick="reactToComment(${index}, 'like')">
+                            <span>👍</span> ${comment.likes}
+                        </button>
+                        <button class="action-btn" onclick="reactToComment(${index}, 'love')">
+                            <span>❤️</span> ${comment.loves}
+                        </button>
+                        <button class="action-btn" onclick="shareComment(${index})">
+                            <span>🔄</span> Share
+                        </button>
+                    </div>
+                `;
+                list.appendChild(commentEl);
+            });
+        }
+
+        function addComment() {
+            const input = document.getElementById('commentInput');
+            const text = input.value.trim();
+
+            if (text) {
+                comments.unshift({
+                    author: "You",
+                    text: text,
+                    likes: 0,
+                    loves: 0,
+                    date: new Date().toLocaleDateString()
+                });
+                loadComments();
+                input.value = '';
+                showNotification('Comment posted successfully! 💬');
+            }
+        }
+
+        function reactToComment(index, type) {
+            if (type === 'like') {
+                comments[index].likes++;
+                showNotification('Thanks for liking! 👍');
+            } else if (type === 'love') {
+                comments[index].loves++;
+                showNotification('Thanks for the love! ❤️');
+            }
+            loadComments();
+        }
+
+        function shareComment(index) {
+            const comment = comments[index];
+            showNotification(`📤 Sharing: "${comment.text.substring(0, 50)}..."`);
+        }
+
+        function loadRules() {
+            const list = document.getElementById('rulesList');
+            if (!list) return;
+            
+            list.innerHTML = '';
+            rules.forEach((rule, index) => {
+                const li = document.createElement('li');
+                li.className = 'rule-item';
+                li.innerHTML = `
+                    <span class="rule-number">${index + 1}.</span>
+                    <span class="rule-text">${rule}</span>
+                `;
+                list.appendChild(li);
+            });
+        }
+
+        function subscribe() {
+            showNotification('✅ Subscribed successfully! You\'ll receive updates about new posts.');
+        }
+
+        function handleKeyPress(e) {
+            if (e.key === 'Enter') addComment();
+        }
+
+        // ========== CHATBOT FUNCTIONS ==========
+        function toggleChat() {
+            document.getElementById('chatWindow').classList.toggle('active');
+            if (document.getElementById('chatWindow').classList.contains('active')) {
+                loadChatMessages();
+            }
+        }
+
+        function loadChatMessages() {
+            const messagesDiv = document.getElementById('chatMessages');
+            messagesDiv.innerHTML = '';
+            chatMessages.forEach(msg => {
+                const div = document.createElement('div');
+                div.className = `message ${msg.type}`;
+                div.innerHTML = `<div class="message-content">${msg.text}</div>`;
+                messagesDiv.appendChild(div);
+            });
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+
+        function sendChatMessage() {
+            const input = document.getElementById('chatInput');
+            const text = input.value.trim();
+
+            if (text) {
+                chatMessages.push({ type: 'user', text: text });
+                
+                setTimeout(() => {
+                    const responses = [
+                        "That's a great question! Try the breathing exercise in the Chill Out Zone! 🌬️",
+                        "Remember to take breaks and practice mindfulness. 💪",
+                        "You're doing great! Keep sharing in the community. 🌟",
+                        "Have you tried journaling? It really helps process emotions. 📝",
+                        "It's okay to ask for help when you need it. We're here for you! 💛"
+                    ];
+                    chatMessages.push({ 
+                        type: 'bot', 
+                        text: responses[Math.floor(Math.random() * responses.length)] 
+                    });
+                    loadChatMessages();
+                }, 1000);
+
+                loadChatMessages();
+                input.value = '';
+            }
+        }
+
+        function handleChatKeyPress(e) {
+            if (e.key === 'Enter') sendChatMessage();
+        }
+
+        // ========== UTILITY FUNCTIONS ==========
         function showNotification(message) {
             const notification = document.createElement('div');
-            notification.style.cssText = `
-                position: fixed;
-                bottom: 20px;
-                right: 20px;
-                background: #1a5f5a;
-                color: white;
-                padding: 1rem;
-                border-radius: 0.5rem;
-                animation: slideIn 0.3s ease-out;
-                z-index: 1000;
-            `;
+            notification.className = 'notification';
             notification.textContent = message;
             document.body.appendChild(notification);
 
-            setTimeout(() => {
-                notification.remove();
-            }, 3000);
+            setTimeout(() => notification.remove(), 3000);
         }
 
-        // Mobile menu
         function toggleMenu() {
             document.getElementById('mobileMenu').classList.toggle('active');
         }
 
-        // Hero message
-        function showMessage() {
-            showNotification('✨ We\'re here for you 24/7! Remember to take breaks and stay positive!');
-        }
-
-        // Open messages
-        function openMessages() {
-            window.location.href = 'community.html';
-        }
-
-        // Logout
         function logout() {
             if (confirm('Are you sure you want to logout?')) {
+                isLoggedIn = false;
                 localStorage.removeItem('loggedIn');
                 localStorage.removeItem('userName');
                 localStorage.removeItem('userEmail');
-                window.location.href = 'login.html';
+                showPage('login');
             }
         }
 
-        // Check if user is logged in
         function checkAuth() {
             const loggedIn = localStorage.getItem('loggedIn');
-            if (loggedIn !== 'true') {
-                window.location.href = 'login.html';
+            if (loggedIn === 'true') {
+                isLoggedIn = true;
+                showPage('home');
+                updateWelcomeMessage();
+            } else {
+                showPage('login');
             }
         }
 
-        // Highlight active page in navigation
-        function setActiveNav() {
-            const currentPage = window.location.pathname.split('/').pop();
-            document.querySelectorAll('.nav-links a, .mobile-menu a').forEach(link => {
-                const href = link.getAttribute('href');
-                if (href === currentPage) {
-                    link.style.color = '#1a5f5a';
-                    link.style.fontWeight = 'bold';
-                }
-            });
-        }
-
-        // Initialize
+        // ========== INITIALIZATION ==========
         document.addEventListener('DOMContentLoaded', () => {
             checkAuth();
+            
+            // Initialize all components
             loadFeatures();
-            setWelcomeMessage();
-            setActiveNav();
+            loadMoods();
+            loadActivities();
+            loadComments();
+            loadRules();
+            loadChatMessages();
         });
-
-        // Add CSS animation for notification
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes slideIn {
-                from {
-                    transform: translateX(100%);
-                    opacity: 0;
-                }
-                to {
-                    transform: translateX(0);
-                    opacity: 1;
-                }
-            }
-            .active {
-                color: #1a5f5a !important;
-                font-weight: bold !important;
-            }
-        `;
-        document.head.appendChild(style);
     </script>
 </body>
 </html>
