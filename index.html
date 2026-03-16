@@ -1,0 +1,258 @@
+<!<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Freshminds Hub - Home</title>
+    
+    <!-- CSS Styles -->
+    <style>
+        /* ... (keep all the existing CSS exactly as before) ... */
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="homepage.html" class="logo">
+                <span>🧠</span>
+                <h2>Freshminds Hub</h2>
+            </a>
+
+            <div class="nav-links">
+                <a href="homepage.html" class="active">🏠 Home</a>
+                <a href="chillout.html">☕ Chill Out Zone</a>
+                <a href="community.html">👥 Community</a>
+                <button class="logout-btn" onclick="logout()">🚪 Logout</button>
+            </div>
+
+            <button class="menu-btn" onclick="toggleMenu()">☰</button>
+        </div>
+
+        <div class="mobile-menu" id="mobileMenu">
+            <a href="homepage.html">🏠 Home</a>
+            <a href="chillout.html">☕ Chill Out Zone</a>
+            <a href="community.html">👥 Community</a>
+            <button onclick="logout()">🚪 Logout</button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Welcome to Freshminds Hub</h1>
+            <p class="hero-text" id="welcomeMessage">
+                Your go-to space for managing exam stress. We help MYP and DP2 students stay calm,
+                focused, and motivated as they prepare for their 2026 exams.
+            </p>
+            <button class="hero-btn" onclick="showMessage()">Always Ready at Your Service</button>
+        </div>
+    </section>
+
+    <!-- Features Grid -->
+    <div class="container">
+        <div class="features-grid" id="featuresGrid"></div>
+
+        <!-- Video Section -->
+        <div class="video-section">
+            <div class="video-container">
+                <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Motivational Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <div class="video-content">
+                <h3 class="video-title">Stay Motivated</h3>
+                <p class="video-desc">Watch inspiring content to keep you going through your exam preparation.</p>
+                <button class="hero-btn" style="margin-top: 1rem;" onclick="window.location.href='chillout.html'">Explore More Videos →</button>
+            </div>
+        </div>
+
+        <!-- Reaction Bar -->
+        <div class="reaction-bar">
+            <button class="reaction-btn" onclick="react('love')">
+                <span>❤️</span>
+                <span class="reaction-count" id="loveCount">28</span>
+                <span>Love</span>
+            </button>
+            <button class="reaction-btn" onclick="react('like')">
+                <span>👍</span>
+                <span class="reaction-count" id="likeCount">42</span>
+                <span>Like</span>
+            </button>
+            <button class="reaction-btn" onclick="openMessages()">
+                <span>💬</span>
+                <span>Messages</span>
+                <span class="badge">5</span>
+            </button>
+        </div>
+
+        <!-- Quick Links -->
+        <div style="display: flex; gap: 1rem; justify-content: center; margin-top: 2rem;">
+            <button class="post-btn" onclick="window.location.href='chillout.html'" style="background: #8a4f9e;">Go to Chill Out Zone 🧘</button>
+            <button class="post-btn" onclick="window.location.href='community.html'" style="background: #1a5f5a;">Join Community Discussion 👥</button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p class="footer-text">
+            Made with <span class="heart">❤️</span> for students by students
+        </p>
+        <p class="copyright">© 2024 Freshminds Hub. All rights reserved.</p>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Features data
+        const features = [
+            { icon: "🎯", title: "Stay Focused", desc: "Learn proven techniques to maintain concentration during study sessions and build healthy study habits.", link: "chillout.html" },
+            { icon: "💪", title: "Build Confidence", desc: "Discover strategies that help you approach exams with confidence and a positive mindset.", link: "community.html" },
+            { icon: "🤝", title: "Connect & Share", desc: "Join a supportive community of fellow students going through the same experience as you.", link: "community.html" },
+            { icon: "🧘", title: "Relax & Recharge", desc: "Take breaks with guided relaxation exercises, fun activities, and calming content.", link: "chillout.html" },
+            { icon: "📊", title: "Track Progress", desc: "Monitor your study habits and stress levels to find what works best for you.", link: "#" },
+            { icon: "💡", title: "Expert Tips", desc: "Get advice from education professionals and experienced students.", link: "community.html" }
+        ];
+
+        // Reaction counts
+        let loves = 28;
+        let likes = 42;
+
+        // Load features
+        function loadFeatures() {
+            const grid = document.getElementById('featuresGrid');
+            features.forEach((feature, index) => {
+                const card = document.createElement('div');
+                card.className = 'feature-card';
+                card.style.animationDelay = `${index * 0.1}s`;
+                card.onclick = () => {
+                    if (feature.link !== '#') {
+                        window.location.href = feature.link;
+                    }
+                };
+                card.style.cursor = feature.link !== '#' ? 'pointer' : 'default';
+                card.innerHTML = `
+                    <div class="feature-icon">${feature.icon}</div>
+                    <h3 class="feature-title">${feature.title}</h3>
+                    <p class="feature-desc">${feature.desc}</p>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Set welcome message with user name
+        function setWelcomeMessage() {
+            const userName = localStorage.getItem('userName');
+            const welcomeEl = document.getElementById('welcomeMessage');
+            if (userName) {
+                welcomeEl.innerHTML = `Welcome back, ${userName}! 👋 Your go-to space for managing exam stress. We help MYP and DP2 students stay calm, focused, and motivated as they prepare for their 2026 exams.`;
+            }
+        }
+
+        // Reaction handlers
+        function react(type) {
+            if (type === 'love') {
+                loves++;
+                document.getElementById('loveCount').textContent = loves;
+                showNotification('Thanks for the love! 💕');
+            } else if (type === 'like') {
+                likes++;
+                document.getElementById('likeCount').textContent = likes;
+                showNotification('Thanks for liking! 👍');
+            }
+        }
+
+        // Show notification
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                background: #1a5f5a;
+                color: white;
+                padding: 1rem;
+                border-radius: 0.5rem;
+                animation: slideIn 0.3s ease-out;
+                z-index: 1000;
+            `;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+
+        // Mobile menu
+        function toggleMenu() {
+            document.getElementById('mobileMenu').classList.toggle('active');
+        }
+
+        // Hero message
+        function showMessage() {
+            showNotification('✨ We\'re here for you 24/7! Remember to take breaks and stay positive!');
+        }
+
+        // Open messages
+        function openMessages() {
+            window.location.href = 'community.html';
+        }
+
+        // Logout
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                localStorage.removeItem('loggedIn');
+                localStorage.removeItem('userName');
+                localStorage.removeItem('userEmail');
+                window.location.href = 'login.html';
+            }
+        }
+
+        // Check if user is logged in
+        function checkAuth() {
+            const loggedIn = localStorage.getItem('loggedIn');
+            if (loggedIn !== 'true') {
+                window.location.href = 'login.html';
+            }
+        }
+
+        // Highlight active page in navigation
+        function setActiveNav() {
+            const currentPage = window.location.pathname.split('/').pop();
+            document.querySelectorAll('.nav-links a, .mobile-menu a').forEach(link => {
+                const href = link.getAttribute('href');
+                if (href === currentPage) {
+                    link.style.color = '#1a5f5a';
+                    link.style.fontWeight = 'bold';
+                }
+            });
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            checkAuth();
+            loadFeatures();
+            setWelcomeMessage();
+            setActiveNav();
+        });
+
+        // Add CSS animation for notification
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+            .active {
+                color: #1a5f5a !important;
+                font-weight: bold !important;
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
